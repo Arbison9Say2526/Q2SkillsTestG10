@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform 9¾ Security Inspection</title>
+    <link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css">
+    <script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --parchment: #f9f6ef;
+            --parchment-subtle: #efe9db;
+            --ink: #2b1e16;
+            --gold: #b8860b;
+            --burgundy: #671418;
+            --dark-wood: #18120e;
+            --border-gold: #c5a059;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--dark-wood);
+            background-image: radial-gradient(circle, rgba(43, 30, 22, 0.6) 0%, rgba(10, 7, 5, 0.95) 100%);
+            color: var(--ink);
+            font-family: 'Lora', Georgia, serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 32px 16px;
+        }
+
+        .magical-card {
+            background: var(--parchment);
+            border: 2px solid var(--border-gold);
+            outline: 6px solid var(--burgundy);
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+            max-width: 580px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: var(--burgundy);
+            color: var(--parchment);
+            padding: 18px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-gold);
+        }
+
+        .header-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            color: #f7e7ce;
+            text-transform: uppercase;
+        }
+
+        .platform-badge {
+            background: var(--gold);
+            color: var(--dark-wood);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 4px;
+            border: 1px solid var(--parchment);
+        }
+
+        .card-body {
+            padding: 40px 36px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--burgundy);
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .intro-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 28px;
+            color: #3b281c;
+        }
+
+        .warning-scroll {
+            background: var(--parchment-subtle);
+            border: 1px solid var(--border-gold);
+            border-left: 5px solid var(--burgundy);
+            padding: 16px 20px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 32px;
+            color: #2b1e16;
+        }
+
+        .warning-scroll strong {
+            color: var(--burgundy);
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.5px;
+        }
+
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 32px;
+        }
+
+        label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--burgundy);
+            text-transform: uppercase;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            font-family: 'Lora', Georgia, serif;
+            font-size: 1.05rem;
+            padding: 12px 16px;
+            border: 1px solid var(--border-gold);
+            border-radius: 4px;
+            background: #ffffff;
+            color: var(--ink);
+            outline: none;
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--burgundy);
+            box-shadow: 0 0 6px rgba(103, 20, 24, 0.25);
+        }
+
+        button {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            background: var(--burgundy);
+            color: var(--parchment);
+            border: 1px solid var(--border-gold);
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            white-space: nowrap;
+        }
+
+        button:hover {
+            background: #542228;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        #result {
+            min-height: 64px;
+            background: var(--parchment-subtle);
+            border: 1px dashed var(--border-gold);
+            border-radius: 4px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--burgundy);
+            text-align: center;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="magical-card">
+        <div class="terminal-header">
+            <span class="header-title">Ministry of Magic Control</span>
+            <span class="platform-badge">PLATFORM 9 ¾</span>
+        </div>
+
+        <div class="card-body">
+            <h1>Non-Metal Detector</h1>
+            
+            <p class="intro-text">Kindly step up to the scanner and state the non-metal substance you are carrying. Standard security protocol applies.</p>
+
+            <div class="warning-scroll">
+                <strong>SECURITY NOTICE:</strong> Under no circumstances may <strong>ARGON</strong> be brought past this gate. It opens a lot of old wounds.
+            </div>
+
+            <div class="form-section">
+                <label for="nonmetal_given">Declared Substance</label>
+                <div class="input-group">
+                    <input type="text" id="nonmetal_given" name="nonmetal_given" placeholder="e.g. Ar">
+                    <button id="search-btn" py-click="search_element">Inspect Item</button>
+                </div>
+            </div>
+
+            <div id="result">Awaiting security inspection...</div>
+        </div>
+    </div>
+
+    <py-script src="main.py"></py-script>
+</body>
+</html>
